@@ -1,0 +1,4 @@
+discord.py
+gtts
+python-dotenv
+virtualenv
