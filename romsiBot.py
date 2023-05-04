@@ -83,7 +83,8 @@ async def tts(ctx, *args: str):
 
     else:
         await ctx.send("Le bot n'est pas connecter dans votre salon")
-
+    
+    await ctx.message.delete()
 
 # Lance le bot
 bot.run(TOKEN)
