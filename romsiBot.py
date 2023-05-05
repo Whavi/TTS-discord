@@ -22,6 +22,8 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 async def on_ready():
     print(f'Le bot {bot.user} est prêt !')
 
+# Déconnecte le bot lorsqu'il n'y a plus personne dans le salon un certain temps
+
 
 @bot.event
 async def on_voice_state_update(member, before, after):
@@ -45,18 +47,21 @@ async def join(ctx):
         await voice_channel.connect()
     else:
         await ctx.voice_client.move_to(voice_channel)
-    await ctx.send(f"Connecté au salon vocal {voice_channel.name} !")
+    await print(f"Connecté au salon vocal {voice_channel.name} !")
     await ctx.message.delete()
+
+# Commande pour quitter le salon vocal de l'utilisateur
 
 
 @bot.command(name='leave')
 async def leave(ctx):
+    voice_channel = ctx.author.voice.channel
     voice_client = ctx.voice_client
     if voice_client:
         if voice_client.is_playing():
             voice_client.stop()
         await voice_client.disconnect()
-        await ctx.send("Déconnecté du salon vocal.")
+        await print(f"Déconnecté du salon vocal {voice_channel.name}.")
         await ctx.message.delete()
     else:
         await ctx.send("Je ne suis pas connecté à un salon vocal.")
