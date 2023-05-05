@@ -1,3 +1,4 @@
+import asyncio
 import discord
 from discord.ext import commands
 from discord import FFmpegPCMAudio
@@ -42,12 +43,14 @@ async def join(ctx):
         await ctx.send("Tu n'es pas connecté à un salon vocal.")
         return
 
+    server_name = ctx.guild.name
     voice_channel = ctx.author.voice.channel
     if ctx.voice_client is None:
         await voice_channel.connect()
     else:
         await ctx.voice_client.move_to(voice_channel)
-    await print(f"Connecté au salon vocal {voice_channel.name} !")
+    print(
+        f"Connecté au salon vocal {voice_channel.name} dans le serveur de {server_name} !")
     await ctx.message.delete()
 
 # Commande pour quitter le salon vocal de l'utilisateur
@@ -55,13 +58,14 @@ async def join(ctx):
 
 @bot.command(name='leave')
 async def leave(ctx):
+    server_name = ctx.guild.name
     voice_channel = ctx.author.voice.channel
     voice_client = ctx.voice_client
     if voice_client:
         if voice_client.is_playing():
             voice_client.stop()
         await voice_client.disconnect()
-        await print(f"Déconnecté du salon vocal {voice_channel.name}.")
+        await print(f"Déconnecté du salon vocal {voice_channel.name} dans le serveur de {server_name}.")
         await ctx.message.delete()
     else:
         await ctx.send("Je ne suis pas connecté à un salon vocal.")
@@ -82,7 +86,6 @@ async def tts(ctx, *args: str):
         # text_to_speak = f"{ctx.author.name} dit : {text}"
         sound = gTTS(text=text, lang="fr", slow=False)
         sound.save("audio.wav")
-
         source = FFmpegPCMAudio('audio.wav')
         vc.play(source)
         await ctx.message.delete()
@@ -96,15 +99,14 @@ async def tts(ctx, *args: str):
 @bot.command()
 async def replay(ctx):
     user = ctx.message.author
-    if user.voice != None:
+    if user.voice is not None:
         try:
             vc = await user.voice.channel.connect()
         except:
             vc = ctx.voice_client
-        source = FFmpegPCMAudio('audio.wav')
-        vc.play(source)
+            source = FFmpegPCMAudio('audio.wav')
+            vc.play(source)
         await ctx.message.delete()
-
     else:
         await ctx.send("Le bot n'est pas connecter dans votre salon")
 
