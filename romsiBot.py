@@ -26,7 +26,7 @@ async def on_ready():
 
 
 @bot.event
-async def on_voice_state_update(member, before, after):
+async def on_voice_state_update():
     if bot.voice_clients and bot.voice_clients[0].channel:
         channel = bot.voice_clients[0].channel
         if not channel.members:  # Aucun utilisateur dans le canal vocal
@@ -83,6 +83,24 @@ async def tts(ctx, *args: str):
         sound = gTTS(text=text, lang="fr", slow=False)
         sound.save("audio.wav")
 
+        source = FFmpegPCMAudio('audio.wav')
+        vc.play(source)
+        await ctx.message.delete()
+
+    else:
+        await ctx.send("Le bot n'est pas connecter dans votre salon")
+
+
+# Commande pour transcrire le dernier message en audio
+
+@bot.command()
+async def replay(ctx):
+    user = ctx.message.author
+    if user.voice != None:
+        try:
+            vc = await user.voice.channel.connect()
+        except:
+            vc = ctx.voice_client
         source = FFmpegPCMAudio('audio.wav')
         vc.play(source)
         await ctx.message.delete()
