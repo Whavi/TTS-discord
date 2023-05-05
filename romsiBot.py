@@ -22,7 +22,6 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 async def on_ready():
     print(f'Le bot {bot.user} est prêt !')
 
-# Déconnecte le bot lorsqu'il n'ya plus personne dans le vocal
 
 @bot.event
 async def on_voice_state_update(member, before, after):
@@ -47,9 +46,9 @@ async def join(ctx):
     else:
         await ctx.voice_client.move_to(voice_channel)
     await ctx.send(f"Connecté au salon vocal {voice_channel.name} !")
+    await ctx.message.delete()
 
-# Commande pour quitter le salon vocal de l'utilisateur
-    
+
 @bot.command(name='leave')
 async def leave(ctx):
     voice_client = ctx.voice_client
@@ -58,6 +57,7 @@ async def leave(ctx):
             voice_client.stop()
         await voice_client.disconnect()
         await ctx.send("Déconnecté du salon vocal.")
+        await ctx.message.delete()
     else:
         await ctx.send("Je ne suis pas connecté à un salon vocal.")
 
@@ -74,17 +74,16 @@ async def tts(ctx, *args: str):
         except:
             vc = ctx.voice_client
 
-        text_to_speak = f"{ctx.author.name} dit : {text}"
-        sound = gTTS(text=text_to_speak, lang="fr", slow=False)
+        # text_to_speak = f"{ctx.author.name} dit : {text}"
+        sound = gTTS(text=text, lang="fr", slow=False)
         sound.save("audio.wav")
 
         source = FFmpegPCMAudio('audio.wav')
         vc.play(source)
+        await ctx.message.delete()
 
     else:
         await ctx.send("Le bot n'est pas connecter dans votre salon")
-    
-    await ctx.message.delete()
 
 # Lance le bot
 bot.run(TOKEN)
