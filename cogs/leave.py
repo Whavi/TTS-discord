@@ -22,6 +22,8 @@ class Leave(commands.Cog):
             embed = discord.Embed(title=" Disconnected",
                                   description=f"Deconnecté du salon vocal {channel.name}",
                                   color=0xff0000)
+            embed.set_author(name="TTSRomnisa",
+                             icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
             embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
             await print(f"Déconnecté du salon vocal {channel.name} dans le serveur de {server_name}.")
