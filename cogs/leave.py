@@ -10,6 +10,7 @@ class Leave(commands.Cog):
 
     @app_commands.command(name="leave", description="déconnecte le bot du salon auquel tu es connecté")
     async def leave_slash(self, interaction: discord.Interaction):
+        user = interaction.user  # l'utilisateur
         server_name = interaction.guild.name  # le nom du serveur
         channel = interaction.user.voice.channel  # le salon du serveur
         voice_client = interaction.guild.voice_client  # l'emplacement de l'utilisateur
@@ -27,6 +28,10 @@ class Leave(commands.Cog):
             embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
             await print(f"Déconnecté du salon vocal {channel.name} dans le serveur de {server_name}.")
+            print(f"Server : {server_name} ")
+            print(f"Salon : {channel} ")
+            print(f"ID : {user.id}")
+            print(f"{user.name} a fait déconnecté le bot")
 
     @leave_slash.error
     async def say_error(self, interaction: discord.Interaction, error):

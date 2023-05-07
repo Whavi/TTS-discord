@@ -11,6 +11,7 @@ class Join(commands.Cog):
     @app_commands.command(name="join", description="rejoint le salon auquel tu es connecté")
     async def join_slash(self, interaction: discord.Interaction,):
 
+        user = interaction.user  # l'utilisateur
         server_name = interaction.guild.name  # le nom du serveur
         channel = interaction.user.voice.channel  # le salon vocal du serveur
         voice_client = interaction.guild.voice_client  # l'emplacement de l'utilisateur
@@ -31,6 +32,10 @@ class Join(commands.Cog):
                          icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
         embed.set_footer(text="Bot fait par Whavi !")
         await interaction.response.send_message(embed=embed, ephemeral=True)
+        print(f"Server : {server_name} ")
+        print(f"Salon : {channel} ")
+        print(f"ID : {user.id}")
+        print(f"{user.name} a fait rejoindre le bot")
 
     @join_slash.error
     async def say_error(self, interaction: discord.Interaction, error):

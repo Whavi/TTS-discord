@@ -13,14 +13,23 @@ class Replay(commands.Cog):
 
     @app_commands.command(name="replay", description="rejoue le dernier son tts du bot")
     async def replay_slash(self, interaction: discord.Interaction):
-        user = interaction.user.message
+        user = interaction.user
         server_name = interaction.guild.name
-        channel_name = interaction.author.voice.channel.name
+        channel_name = user.voice.channel.name
+        voice_client = interaction.guild.voice_client
 
         if user.voice is not None:
             vc = interaction.voice_client
             source = FFmpegPCMAudio('audio.wav')
             vc.play(source)
+            embed = discord.Embed(title=" TTS replay",
+                                  description=f"Le message à bien été renvoyer",
+                                  color=0xff0000)
+            embed.set_author(name="TTSRomnisa",
+                             icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
+            embed.set_footer(text="Bot fait par Whavi !")
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
             print(f"Server : {server_name} ")
             print(f"Salon : {channel_name} ")
             print(f"ID : {user.id}")

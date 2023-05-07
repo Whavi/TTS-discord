@@ -13,11 +13,9 @@ class tts(commands.Cog):
     # Commande du /tts
 
     @app_commands.command(name="tts", description="Premet de faire le Text to speech au bot")
-    async def tts_slash(self, interaction: discord.Interaction, *, message: str):
-        args = message
-        user = args.user.author  # Récupérer l'instance de l'utilisateur
+    async def tts_slash(self, interaction: discord.Interaction, message: str):
+        user = interaction.user  # Récupérer l'instance de l'utilisateur
         # Récupérer l'instance du text de l'utilisateur
-        text = " ".join(args)
         if user.voice != None:
             try:
                 # Essayer de se connecter dans le salon de l'utilisateur sans se deconnecter
@@ -27,12 +25,17 @@ class tts(commands.Cog):
                 vc = user.guild.voice_client
 
             # text_to_speak = f"{user.author.name} dit : {text}" ( manière de savoir qui à écrit le message )
-            sound = gTTS(text=text, lang="fr", slow=False)
+            sound = gTTS(text=message, lang="fr", slow=False)
             sound.save("audio.wav")
             source = FFmpegPCMAudio('audio.wav')
             vc.play(source)
-        else:
-            await interaction.response.send_message("Le bot n'est pas connecter dans votre salon")
+            embed = discord.Embed(title=" TTS request",
+                                  description=f"Le message est bien envoyer",
+                                  color=0xff0000)
+            embed.set_author(name="TTSRomnisa",
+                             icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
+            embed.set_footer(text="Bot fait par Whavi !")
+            await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @tts_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
