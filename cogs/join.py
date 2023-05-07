@@ -21,9 +21,6 @@ class Join(commands.Cog):
         else:
             # sinon il va se connecter directement au salon de l'utilisateur
             await voice_client.move_to(channel)
-        print(
-            f"Connecté au salon vocal {channel.name} dans le serveur de {server_name} !")
-
         # embed de couleur rouge qui permet de dire que le bot est connecter
         embed = discord.Embed(title=" Connected",
                               description=f"Connecté au salon vocal {channel.name}",

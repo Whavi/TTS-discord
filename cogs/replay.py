@@ -3,7 +3,6 @@ import os
 from discord.ext import commands
 from discord import app_commands
 from discord import FFmpegPCMAudio
-from gtts import gTTS
 
 
 class Replay(commands.Cog):
@@ -16,10 +15,10 @@ class Replay(commands.Cog):
         user = interaction.user
         server_name = interaction.guild.name
         channel_name = user.voice.channel.name
-        voice_client = interaction.guild.voice_client
+        voice_client = user.guild.voice_client
 
-        if user.voice is not None:
-            vc = interaction.voice_client
+        if voice_client is not None:
+            vc = user.guild.voice_client
             source = FFmpegPCMAudio('audio.wav')
             vc.play(source)
             embed = discord.Embed(title=" TTS replay",

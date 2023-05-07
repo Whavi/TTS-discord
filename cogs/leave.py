@@ -27,7 +27,6 @@ class Leave(commands.Cog):
                              icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
             embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
-            await print(f"Déconnecté du salon vocal {channel.name} dans le serveur de {server_name}.")
             print(f"Server : {server_name} ")
             print(f"Salon : {channel} ")
             print(f"ID : {user.id}")
