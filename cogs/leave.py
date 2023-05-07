@@ -22,7 +22,7 @@ class Leave(commands.Cog):
             embed = discord.Embed(title=" Disconnected",
                                   description=f"Deconnecté du salon vocal {channel.name}",
                                   color=0xff0000)
-            embed.set_footer(text="Bot fait par Fethi !")
+            embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
             await print(f"Déconnecté du salon vocal {channel.name} dans le serveur de {server_name}.")
 
