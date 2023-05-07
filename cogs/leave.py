@@ -18,13 +18,13 @@ class Leave(commands.Cog):
             if voice_client.is_playing():
                 voice_client.stop()
             await voice_client.disconnect()
-            await print(f"Déconnecté du salon vocal {channel.name} dans le serveur de {server_name}.")
 
             embed = discord.Embed(title=" Disconnected",
-                                  description=f"Deconnecter du salon vocal {channel.name}",
+                                  description=f"Deconnecté du salon vocal {channel.name}",
                                   color=0xff0000)
             embed.set_footer(text="Bot fait par Fethi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
+            await print(f"Déconnecté du salon vocal {channel.name} dans le serveur de {server_name}.")
 
     @leave_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
