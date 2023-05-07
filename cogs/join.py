@@ -15,10 +15,6 @@ class Join(commands.Cog):
         channel = interaction.user.voice.channel  # le salon vocal du serveur
         voice_client = interaction.guild.voice_client  # l'emplacement de l'utilisateur
 
-        if channel is None:
-            await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
-            return
-
         if voice_client is None:  # s'il n y a personne dans un salon vocal
             await channel.connect()  # alors il va se connecter au salon de l'utilisateur
         else:
@@ -36,7 +32,7 @@ class Join(commands.Cog):
 
     @join_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
-        await interaction.response.send_message("Une erreur s'est produite lors de l'exécution de la commande.", ephemeral=True)
+        await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
 
 
 async def setup(bot):
