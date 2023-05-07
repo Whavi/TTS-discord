@@ -12,24 +12,30 @@ class Join(commands.Cog):
     async def join_slash(self, interaction: discord.Interaction):
 
         server_name = interaction.guild.name  # le nom du serveur
-        channel = interaction.user.voice.channel  # le salon du serveur
+        channel = interaction.user.voice.channel  # le salon vocal du serveur
         voice_client = interaction.guild.voice_client  # l'emplacement de l'utilisateur
 
-        if voice_client is None:  # s'il n y a personne dans un salon
-            await channel.connect()  # alors il va se connecter au salon de l'utilisateur
-        else:
-            # sinon il va se connecter directement au salon de l'utilisateur
-            await voice_client.move_to(channel)
-            print(
-                f"Connecté au salon vocal {channel.name} dans le serveur de {server_name} !")
-
-    @join_slash.error
-    async def say_error(self, interaction: discord.Interaction, error):
-        channel = interaction.user.voice.channel
         if channel is None:
             await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
             return
 
+        if voice_client is None:  # s'il n y a personne dans un salon vocal
+            await channel.connect()  # alors il va se connecter au salon de l'utilisateur
+        else:
+            # sinon il va se connecter directement au salon de l'utilisateur
+            await voice_client.move_to(channel)
+        print(
+            f"Connecté au salon vocal {channel.name} dans le serveur de {server_name} !")
+
+        # embed de couleur rouge qui permet de dire que le bot est connecter
+        embed = discord.Embed(title=" Connected",
+                              description=f"Connecté au salon vocal {channel.name}",
+                              color=0xff0000)
+        embed.set_footer(text="Bot fait par Whavi !")
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @join_slash.error
+    async def say_error(self, interaction: discord.Interaction, error):
         await interaction.response.send_message("Une erreur s'est produite lors de l'exécution de la commande.", ephemeral=True)
 
 
