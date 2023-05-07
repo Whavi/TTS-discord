@@ -47,6 +47,8 @@ async def on_ready():
 async def tts(ctx, *args: str):
     text = " ".join(args)
     user = ctx.message.author
+    server_name = ctx.guild.name
+    channel_name = ctx.author.voice.channel.name
     if user.voice != None:
         try:
             vc = await user.voice.channel.connect()
@@ -58,6 +60,10 @@ async def tts(ctx, *args: str):
         sound.save("audio.wav")
         source = FFmpegPCMAudio('audio.wav')
         vc.play(source)
+        print(f"Server : {server_name} ")
+        print(f"Salon : {channel_name} ")
+        print(f"ID : {user.id}")
+        print(f"{user.name} a fait un replay de l'audio 'audio.wav' ")
         await ctx.message.delete()
 
     else:
@@ -69,6 +75,9 @@ async def tts(ctx, *args: str):
 @bot.command()
 async def replay(ctx):
     user = ctx.message.author
+    server_name = ctx.guild.name
+    channel_name = ctx.author.voice.channel.name
+
     if user.voice is not None:
         try:
             vc = await user.voice.channel.connect()
@@ -76,6 +85,10 @@ async def replay(ctx):
             vc = ctx.voice_client
             source = FFmpegPCMAudio('audio.wav')
             vc.play(source)
+            print(f"Server : {server_name} ")
+            print(f"Salon : {channel_name} ")
+            print(f"ID : {user.id}")
+            print(f"{user.name} a fait un replay de l'audio 'audio.wav'")
         await ctx.message.delete()
     else:
         await ctx.send("Le bot n'est pas connecter dans votre salon")
