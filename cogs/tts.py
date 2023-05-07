@@ -6,21 +6,27 @@ from gtts import gTTS
 
 
 class tts(commands.Cog):
+    # Constructeur de la classe tts
     def __init__(self, bot):
         self.bot = bot
+
+    # Commande du /tts
 
     @app_commands.command(name="tts", description="Premet de faire le Text to speech au bot")
     async def tts_slash(self, interaction: discord.Interaction, *, message: str):
         args = message
-        user = args.user.author
+        user = args.user.author  # Récupérer l'instance de l'utilisateur
+        # Récupérer l'instance du text de l'utilisateur
         text = " ".join(args)
         if user.voice != None:
             try:
+                # Essayer de se connecter dans le salon de l'utilisateur sans se deconnecter
                 vc = await user.voice.channel.connect()
             except:
+                # Sinon rejondre l'utilisateur dans un autre salon sans se deconnecter
                 vc = user.guild.voice_client
 
-            # text_to_speak = f"{user.author.name} dit : {text}"
+            # text_to_speak = f"{user.author.name} dit : {text}" ( manière de savoir qui à écrit le message )
             sound = gTTS(text=text, lang="fr", slow=False)
             sound.save("audio.wav")
             source = FFmpegPCMAudio('audio.wav')

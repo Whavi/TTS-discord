@@ -4,16 +4,17 @@ from discord.ext import commands
 
 
 class Leave(commands.Cog):
+    # Constructeur de la classe leave
     def __init__(self, bot):
         self.bot = bot
 
     @app_commands.command(name="leave", description="déconnecte le bot du salon auquel tu es connecté")
     async def leave_slash(self, interaction: discord.Interaction):
-        server_name = interaction.guild.name
-        voice_channel = interaction.user.voice.channel
-        voice_client = interaction.guild.voice_client
+        server_name = interaction.guild.name  # le nom du serveur
+        channel = interaction.user.voice.channel  # le salon du serveur
+        voice_client = interaction.guild.voice_client  # l'emplacement de l'utilisateur
 
-        if voice_channel is None:
+        if channel is None:
             await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
             return
 
@@ -21,7 +22,7 @@ class Leave(commands.Cog):
             if voice_client.is_playing():
                 voice_client.stop()
             await voice_client.disconnect()
-            await print(f"Déconnecté du salon vocal {voice_channel.name} dans le serveur de {server_name}.")
+            await print(f"Déconnecté du salon vocal {channel.name} dans le serveur de {server_name}.")
 
     @leave_slash.error
     async def say_error(self, interaction: discord.Interaction, error):

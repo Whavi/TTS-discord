@@ -4,19 +4,21 @@ from discord.ext import commands
 
 
 class Join(commands.Cog):
+    # Constructeur de la classe Join
     def __init__(self, bot):
         self.bot = bot
 
     @app_commands.command(name="join", description="rejoint le salon auquel tu es connecté")
     async def join_slash(self, interaction: discord.Interaction):
 
-        server_name = interaction.guild.name
-        channel = interaction.user.voice.channel
-        voice_client = interaction.guild.voice_client
+        server_name = interaction.guild.name  # le nom du serveur
+        channel = interaction.user.voice.channel  # le salon du serveur
+        voice_client = interaction.guild.voice_client  # l'emplacement de l'utilisateur
 
-        if voice_client is None:
-            await channel.connect()
+        if voice_client is None:  # s'il n y a personne dans un salon
+            await channel.connect()  # alors il va se connecter au salon de l'utilisateur
         else:
+            # sinon il va se connecter directement au salon de l'utilisateur
             await voice_client.move_to(channel)
             print(
                 f"Connecté au salon vocal {channel.name} dans le serveur de {server_name} !")
