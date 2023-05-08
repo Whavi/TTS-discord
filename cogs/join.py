@@ -33,6 +33,7 @@ class Join(commands.Cog):
         print(f"Salon : {channel} ")
         print(f"ID : {user.id}")
         print(f"{user.name} a fait rejoindre le bot")
+        print("-------------------------------")
 
     @join_slash.error
     async def say_error(self, interaction: discord.Interaction, error):

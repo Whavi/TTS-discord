@@ -13,6 +13,9 @@ class disconnectUser(commands.Cog):
     @app_commands.default_permissions(administrator=True)
     async def disconnectUser_slash(self, interaction: discord.Interaction, membre: discord.Member):
 
+        user = interaction.user
+        server_name = interaction.guild.name
+        channel_name = user.voice.channel.name
         log_server_id = "1097189794443952168"
 
         if membre.voice and membre.voice.channel:
@@ -26,7 +29,7 @@ class disconnectUser(commands.Cog):
             embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
-            # log discord sur mon discord dans mon salon predéfinie
+            # log discord vers mon serveur
             log = discord.utils.get(
                 self.bot.get_guild(log_server_id), name="log-deconnexion")
 
@@ -40,6 +43,13 @@ class disconnectUser(commands.Cog):
                 name="Salon :", value=membre.voice.channel.name, inline=False)
             embed_log.set_footer(text="Bot fait par Whavi !")
             await log.send(embed=embed_log)
+
+            print(f"Server : {server_name} ")
+            print(f"Salon : {channel_name} ")
+            print(f"ID : {user.id}")
+            print(
+                f"{user.name} a fait un déconnecté {membre.name}#{membre.discriminator} | {membre.display_name}")
+            print("-------------------------------")
 
         else:
             embed = discord.Embed(title="Deconnexion Impossible ",

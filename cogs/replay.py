@@ -20,6 +20,7 @@ class Replay(commands.Cog):
             vc = user.guild.voice_client
             source = FFmpegPCMAudio('audio.wav')
             vc.play(source)
+
             embed = discord.Embed(title=" TTS replay",
                                   description=f"Le message à bien été renvoyer",
                                   color=0xff0000)
@@ -32,6 +33,7 @@ class Replay(commands.Cog):
             print(f"Salon : {channel_name} ")
             print(f"ID : {user.id}")
             print(f"{user.name} a fait un replay de l'audio 'audio.wav'")
+            print("-------------------------------")
 
     @replay_slash.error
     async def say_error(self, interaction: discord.Interaction, error):

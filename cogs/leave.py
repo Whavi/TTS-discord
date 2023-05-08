@@ -31,6 +31,7 @@ class Leave(commands.Cog):
             print(f"Salon : {channel} ")
             print(f"ID : {user.id}")
             print(f"{user.name} a fait déconnecté le bot")
+            print("-------------------------------")
 
     @leave_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
