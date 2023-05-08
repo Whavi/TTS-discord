@@ -9,7 +9,7 @@ class userInfo(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="info_utilisateur", description="Donne les informations sur un Utilisateur")
-    async def music_slash(self, interaction: discord.Interaction, membre: discord.Member):
+    async def userInfo_slash(self, interaction: discord.Interaction, membre: discord.Member):
 
         if membre is None:
             membre = interaction.user
@@ -35,6 +35,11 @@ class userInfo(commands.Cog):
                          icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
         embed.set_footer(text="Bot fait par Whavi !")
         await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @userInfo_slash.error
+    async def say_error(selself, interaction: discord.Interaction, error):
+        if not interaction.response.is_done():
+            await interaction.response.send_message("Vous n'avez pas les permissions")
 
 
 async def setup(bot):

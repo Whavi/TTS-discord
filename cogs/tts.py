@@ -39,7 +39,8 @@ class tts(commands.Cog):
 
     @tts_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
-        await interaction.response.send_message("Une erreur s'est produite lors de l'exécution de la commande.", ephemeral=True)
+        if not interaction.response.is_done():
+            await interaction.response.send_message("Une erreur s'est produite lors de l'exécution de la commande.", ephemeral=True)
 
 
 async def setup(bot):

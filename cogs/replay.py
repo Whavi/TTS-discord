@@ -35,7 +35,8 @@ class Replay(commands.Cog):
 
     @replay_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
-        await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
+        if not interaction.response.is_done():
+            await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
 
 
 async def setup(bot):

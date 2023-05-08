@@ -22,7 +22,8 @@ class Ping(commands.Cog):
 
     @ping_slash.error
     async def say_error(selself, interaction: discord.Interaction, error):
-        await interaction.response.send_message("Vous n'avez pas les permissions")
+        if not interaction.response.is_done():
+            await interaction.response.send_message("Vous n'avez pas les permissions")
 
 
 async def setup(bot):

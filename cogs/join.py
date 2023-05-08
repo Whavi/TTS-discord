@@ -9,7 +9,7 @@ class Join(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="join", description="rejoint le salon auquel tu es connecté")
-    async def join_slash(self, interaction: discord.Interaction,):
+    async def join_slash(self, interaction: discord.Interaction):
 
         user = interaction.user  # l'utilisateur
         server_name = interaction.guild.name  # le nom du serveur
@@ -25,8 +25,8 @@ class Join(commands.Cog):
         embed = discord.Embed(title=" Connected",
                               description=f"Connecté au salon vocal {channel.name}",
                               color=0xff0000)
-        embed.set_author(name="TTSRomnisa",
-                         icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
+        embed.set_author(name=f"{user.name}",
+                         icon_url=user.avatar)
         embed.set_footer(text="Bot fait par Whavi !")
         await interaction.response.send_message(embed=embed, ephemeral=True)
         print(f"Server : {server_name} ")
@@ -36,7 +36,8 @@ class Join(commands.Cog):
 
     @join_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
-        await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
+        if not interaction.response.is_done():
+            await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
 
 
 async def setup(bot):

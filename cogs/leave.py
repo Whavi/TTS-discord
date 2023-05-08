@@ -13,7 +13,7 @@ class Leave(commands.Cog):
         user = interaction.user  # l'utilisateur
         server_name = interaction.guild.name  # le nom du serveur
         channel = interaction.user.voice.channel  # le salon du serveur
-        voice_client = interaction.guild.voice_client  # l'emplacement de l'utilisateur
+        voice_client = interaction.guild.voice_client  # l'emplacement du bot
 
         if voice_client:
             if voice_client.is_playing():
@@ -34,7 +34,8 @@ class Leave(commands.Cog):
 
     @leave_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
-        await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
+        if not interaction.response.is_done():
+            await interaction.response.send_message("Vous n'êtes pas connecté dans un salon vocal.", ephemeral=True)
 
 
 async def setup(bot):
