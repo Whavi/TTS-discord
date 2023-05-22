@@ -144,7 +144,7 @@ async def clear(ctx, nombre: int):
 
     async for message in ctx.channel.history(limit=nombre):
         await message.delete()
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.21)
 
 # Lance le bot
 bot.run(TOKEN)
