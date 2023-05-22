@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import asyncio
 
 
 class Clear(commands.Cog):
@@ -10,8 +11,8 @@ class Clear(commands.Cog):
 
     @app_commands.command(name="clear", description="suprimme le nombre de message choisi")
     @app_commands.default_permissions(administrator=True)
-    async def clear_slash(self, interaction: discord.Interaction, nombre: int):
-        user = interaction.user  # l'utilisateur
+    async def clear_slash(self, interaction: discord.Interaction, nombre: int, membre: discord.Member = None):
+
         server_name = interaction.guild.name  # le nom du serveur
         channel_name = interaction.channel.name  # le salon vocal du serveur
         user = interaction.user  # Récupérer l'instance de l'utilisateur
@@ -23,7 +24,15 @@ class Clear(commands.Cog):
                          icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
         embed.set_footer(text="Bot fait par Whavi !")
         await interaction.response.send_message(embed=embed, ephemeral=True)
-        await interaction.channel.purge(limit=nombre)
+        
+        if not membre:
+            await interaction.channel.purge(limit=nombre)
+            await asyncio.sleep(0.21)
+            
+        else:
+            await interaction.channel.purge(limit=nombre, check=lambda m: m.author == membre)
+            await asyncio.sleep(0.21)  
+
         print(f"Server : {server_name} ")
         print(f"Salon : {channel_name} ")
         print(f"ID : {user.id}")

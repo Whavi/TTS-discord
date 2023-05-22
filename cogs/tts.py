@@ -14,6 +14,9 @@ class tts(commands.Cog):
 
     @app_commands.command(name="tts", description="Premet de faire le Text to speech au bot")
     async def tts_slash(self, interaction: discord.Interaction, message: str):
+        
+        server_name = interaction.guild.name  # le nom du serveur
+        channel_name = interaction.user.voice.channel.name  # le salon vocal du serveur
         user = interaction.user  # Récupérer l'instance de l'utilisateur
         # Récupérer l'instance du text de l'utilisateur
         if user.voice != None:
@@ -36,6 +39,12 @@ class tts(commands.Cog):
                              icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
             embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
+
+            print(f"Server : {server_name} ")
+            print(f"Salon : {channel_name} ")
+            print(f"ID : {user.id}")
+            print(f"{user.name} a fait un enregistrement de 'audio.wav'")
+            print("-------------------------------")
 
     @tts_slash.error
     async def say_error(self, interaction: discord.Interaction, error):

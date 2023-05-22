@@ -16,7 +16,6 @@ class disconnectUser(commands.Cog):
         user = interaction.user
         server_name = interaction.guild.name
         channel_name = user.voice.channel.name
-        log_server_id = "1097189794443952168"
 
         if membre.voice and membre.voice.channel:
             await membre.move_to(None)
@@ -28,21 +27,6 @@ class disconnectUser(commands.Cog):
                              icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
             embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
-
-            # log discord vers mon serveur
-            log = discord.utils.get(
-                self.bot.get_guild(log_server_id), name="log-deconnexion")
-
-            embed_log = discord.Embed(title="Log Disconnect", color=0x4D13CA)
-            embed_log.add_field(
-                name="Pseudo :", value=membre.name, inline=False)
-            embed_log.add_field(name="Pseudo Serveur :",
-                                value=membre.display_name, inline=False)
-            embed_log.add_field(name="ID :", value=membre.id, inline=False)
-            embed_log.add_field(
-                name="Salon :", value=membre.voice.channel.name, inline=False)
-            embed_log.set_footer(text="Bot fait par Whavi !")
-            await log.send(embed=embed_log)
 
             print(f"Server : {server_name} ")
             print(f"Salon : {channel_name} ")
@@ -61,7 +45,7 @@ class disconnectUser(commands.Cog):
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @disconnectUser_slash.error
-    async def say_error(selself, interaction: discord.Interaction, error):
+    async def say_error(self, interaction: discord.Interaction, error):
         if not interaction.response.is_done():
             await interaction.response.send_message("Vous n'avez pas les permissions")
 

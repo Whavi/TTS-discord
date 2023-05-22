@@ -37,7 +37,7 @@ class userInfo(commands.Cog):
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @userInfo_slash.error
-    async def say_error(selself, interaction: discord.Interaction, error):
+    async def say_error(self, interaction: discord.Interaction, error):
         if not interaction.response.is_done():
             await interaction.response.send_message("Vous n'avez pas les permissions")
 
