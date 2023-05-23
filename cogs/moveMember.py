@@ -8,7 +8,7 @@ class MoveMember(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="membermove", description="Affiche le ping du bot")
+    @app_commands.command(name="membermove", description="Change de salon une personne choisi, sinon c'est toi")
     # seulement les administrateur peuvent utiliser cette commande
     @app_commands.default_permissions(administrator=True)
     async def MoveMember_slash(self, interaction: discord.Interaction, channel: discord.channel.VoiceChannel, membre: discord.Member = None):

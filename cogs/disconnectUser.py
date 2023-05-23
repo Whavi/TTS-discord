@@ -8,7 +8,7 @@ class disconnectUser(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="disconnect", description="Affiche le ping du bot")
+    @app_commands.command(name="disconnect", description="Déconnecte un utilisateur choisi")
     # seulement les administrateur peuvent utiliser cette commande
     @app_commands.default_permissions(administrator=True)
     async def disconnectUser_slash(self, interaction: discord.Interaction, membre: discord.Member):
