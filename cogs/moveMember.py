@@ -11,11 +11,29 @@ class MoveMember(commands.Cog):
     @app_commands.command(name="membermove", description="Affiche le ping du bot")
     # seulement les administrateur peuvent utiliser cette commande
     @app_commands.default_permissions(administrator=True)
-    async def MoveMember_slash(self, interaction: discord.Interaction, membre: discord.Member, channel: discord.channel.VoiceChannel):
+    async def MoveMember_slash(self, interaction: discord.Interaction, channel: discord.channel.VoiceChannel, membre: discord.Member = None):
 
         user = interaction.user
         server_name = interaction.guild.name
         channel_name = user.voice.channel.name
+
+        if not membre and (user.voice and user.voice.channel):
+            await user.move_to(channel)
+
+            embed = discord.Embed(title="Changement de salon vocal réussi ",
+                                  description=f"L'utilisateur **__{user.name}__** à changer de vocal",
+                                  color=0xff0000)
+            embed.set_author(name="TTSRomnisa",
+                             icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
+            embed.set_footer(text="Bot fait par Whavi !")
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
+            print(f"Server : {server_name} ")
+            print(f"Salon : {channel_name} ")
+            print(f"ID : {user.id}")
+            print(
+                f"{user.name} à été déplacer dans {channel.name}")
+            print("-------------------------------")
 
         if membre.voice and membre.voice.channel:
             await membre.move_to(channel)
@@ -32,7 +50,7 @@ class MoveMember(commands.Cog):
             print(f"Salon : {channel_name} ")
             print(f"ID : {user.id}")
             print(
-                f"{user.name} a fait un déconnecté {membre.name}#{membre.discriminator} | {membre.display_name}")
+                f"{user.name} à déplacer {membre.name}#{membre.discriminator} | {membre.display_name} dans {channel.name}")
             print("-------------------------------")
 
         else:
