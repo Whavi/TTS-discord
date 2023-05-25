@@ -16,7 +16,7 @@ class DisconnectUser(commands.Cog):
         # Récupération du nom du serveur
         server_name = interaction.guild.name
         # Récupération du nom du salon vocal de l'utilisateur
-        channel_name = user.voice.channel.name
+        channel_name = membre.voice.channel.name
 
         if membre.voice and membre.voice.channel:
             # Déplacement de l'utilisateur vers aucun salon vocal (déconnexion)
