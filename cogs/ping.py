@@ -15,9 +15,8 @@ class Ping(commands.Cog):
         embed = discord.Embed(title=" Ping du bot",
                               description=f"le ping du bot est de {round(self.bot.latency * 1000)} ms",
                               color=0xff0000)
-        embed.set_author(name="TTSRomnisa",
-                         icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
-        embed.set_footer(text="Bot fait par Whavi !")
+        embed.set_author(name=self.bot.user.name,
+                             icon_url=self.bot.user.avatar_url)
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @ping_slash.error

@@ -11,13 +11,15 @@ class Ban(commands.Cog):
     @app_commands.command(name="ban", description="Ban un utilisateur du serveur")
     @app_commands.default_permissions(administrator=True)
     async def ban_slash(self, interaction: discord.Interaction, membre: discord.Member, reason: str = None):
-
-        user = interaction.user  # Utilisateur exécutant la commande
-        server_name = interaction.guild.name  # Nom du serveur
+        # Récupération de l'utilisateur exécutant la commande
+        user = interaction.user
+        # Récupération du nom du serveur
+        server_name = interaction.guild.name
 
         if not reason:
             reason = "Aucune raison spécifiée"
 
+        # Création de l'embed pour afficher le résultat du ban
         embed = discord.Embed(title="Ban",
                               description=f"L'utilisateur {membre.mention} a été banni du serveur.",
                               color=0xff0000)
@@ -25,9 +27,12 @@ class Ban(commands.Cog):
         embed.set_author(name="TTSRomnisa",
                          icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
         embed.set_footer(text="Bot fait par Whavi !")
+        # Envoi de l'embed en réponse à l'interaction
         await interaction.response.send_message(embed=embed, ephemeral=True)
+        # Bannissement de l'utilisateur
         await membre.ban(reason=reason)
 
+        # Affichage des informations du ban dans la console
         print(f"Server : {server_name}")
         print(f"Utilisateur banni : {membre.name} ({membre.id})")
         print(f"Banni par : {user.name} ({user.id})")
