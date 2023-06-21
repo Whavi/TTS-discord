@@ -12,17 +12,19 @@ class Ping(commands.Cog):
     # seuelement les administrateur peuvent utiliser cette commande
     @app_commands.default_permissions(administrator=True)
     async def ping_slash(self, interaction: discord.Interaction):
+        bot = self.bot
         embed = discord.Embed(title=" Ping du bot",
-                              description=f"le ping du bot est de {round(self.bot.latency * 1000)} ms",
+                              description=f"le ping du bot est de {round(bot.latency * 1000)} ms",
                               color=0xff0000)
-        embed.set_author(name=self.bot.user.name,
-                             icon_url=self.bot.user.avatar_url)
+        embed.set_author(name="TTSRomnisa",
+                             icon_url="https://cdn.discordapp.com/attachments/858697367603249183/11038230²04930158632/shay-jolie-clip.jpg")
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @ping_slash.error
     async def say_error(self, interaction: discord.Interaction, error):
         if not interaction.response.is_done():
             await interaction.response.send_message("Vous n'avez pas les permissions")
+            
 
 
 async def setup(bot):

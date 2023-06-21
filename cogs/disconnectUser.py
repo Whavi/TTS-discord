@@ -17,7 +17,7 @@ class DisconnectUser(commands.Cog):
         server_name = interaction.guild.name
         # Récupération du nom du salon vocal de l'utilisateur
         channel_name = membre.voice.channel.name
-
+        
         if membre.voice and membre.voice.channel:
             # Déplacement de l'utilisateur vers aucun salon vocal (déconnexion)
             await membre.move_to(None)
@@ -42,7 +42,7 @@ class DisconnectUser(commands.Cog):
                                   description=f"L'utilisateur {membre.name} n'est pas connecté à un salon vocal.",
                                   color=0xff0000)
             embed.set_author(name="TTSRomnisa",
-                             icon_url="https://cdn.discordapp.com/attachments/858697367603249183/1103823004930158632/shay-jolie-clip.jpg")
+                             icon_url="https://cdn.discordapp.com/attachments/858697367603249183/11038230²04930158632/shay-jolie-clip.jpg")
             embed.set_footer(text="Bot fait par Whavi !")
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
@@ -50,7 +50,6 @@ class DisconnectUser(commands.Cog):
     async def say_error(self, interaction: discord.Interaction, error):
         if not interaction.response.is_done():
             await interaction.response.send_message("Vous n'avez pas les permissions pour effectuer cette action.")
-
 
 async def setup(bot):
     await bot.add_cog(DisconnectUser(bot))
