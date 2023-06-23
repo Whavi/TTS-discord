@@ -44,6 +44,7 @@ class tts(commands.Cog):
             print(f"Salon : {channel_name} ")
             print(f"ID : {user.id}")
             print(f"{user.name} a effectué une synthèse vocale de 'audio.wav'")
+            print(f"le message : {message}")
             print("-------------------------------")
 
     @tts_slash.error

@@ -28,8 +28,8 @@ class muteInfinity(commands.Cog):
             await interaction.response.send_message(embed=embed, ephemeral=True)
         else: 
             while True:
-                await membre.edit(mute=True, deafen=True) # Activer ou désactiver le mute du casque et du micro 
-                await asyncio.sleep(1)
+                    await membre.edit(mute=True, deafen=True) # Activer ou désactiver le mute du casque et du micro 
+                    await asyncio.sleep(1)
             
         print(f"Server : {server_name} ")
         print(f"ID user : {users.id}")
