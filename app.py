@@ -7,6 +7,7 @@ from discord import FFmpegPCMAudio
 from gtts import gTTS
 from dotenv import load_dotenv
 
+
 # Charge les variables d'environnement à partir du fichier .env
 
 load_dotenv()
@@ -14,22 +15,25 @@ load_dotenv()
 # Récupère le token d'authentification du bot
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+
 # Crée le bot avec le préfixe "!"
 intents = discord.Intents.all()
 intents.message_content = True
 
+bot = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix="!", intents=intents)
 intents.guilds = True
 intents.members = True
 
-# Affiche un message dans la console quand le bot est prêt
 
+# Affiche un message dans la console quand le bot est prêt
 
 @bot.event
 async def on_ready():
     print(f'Le bot {bot.user.name} est prêt !')
     print(f"ID : {bot.user.id}")
-
+    print("-------------------------------")
+     
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py"):
             if filename[:-3] not in ["view"]:
@@ -38,13 +42,16 @@ async def on_ready():
 
     try:
         synced = await bot.tree.sync()
+        print("-------------------------------")
         print(f"syncro {len(synced)} commands")
+        print("-------------------------------")
     except Exception as e:
         print(e)
-
+    
+    await bot.change_presence(status=discord.Status.dnd, activity=discord.Game('Tape sur Alexys'))
+    
 
 # Commande pour rejoindre le salon vocal de l'utilisateur
-
 
 @bot.command(name='join')
 async def join(ctx):
@@ -145,6 +152,7 @@ async def clear(ctx, nombre: int):
     async for message in ctx.channel.history(limit=nombre):
         await message.delete()
         await asyncio.sleep(0.21)
+    
 
 # Lance le bot
 bot.run(TOKEN)
